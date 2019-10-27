@@ -19,16 +19,22 @@ RUN apt-get -y install libreoffice
 # copy run script
 COPY run.bash /run.bash
 RUN chmod a+x /run.bash
+# vnc server config
+# (note: we don't use $HOME/.vnc/xstartup as we want to be able to map $HOME to a Docker volume)
+# RUN echo '#!/bin/bash\nxrdb $HOME/.Xresources\nstartxfce4 &\n' > /etc/vnc/xstartup
+RUN mkdir /etc/vnc
+RUN echo '#!/bin/bash\nstartxfce4 &\n' > /etc/vnc/xstartup
+# xstartup needs to be executable (for at least the user who runs vnc server)
+RUN chmod 755 /etc/vnc/xstartup
 # create user
 RUN useradd -ms /bin/bash ehlo
 RUN usermod -aG sudo ehlo
 # from this point on we'll use the "ehlo" user -> $HOME points to  its  home dir (not root's)
 USER ehlo
 WORKDIR /home/ehlo
-# create xstartup
+# create user .vnc dir (needed for vncpasswd in run script) and symlink xstartup file (so it can get updated even when the home dir is a volume)
 RUN mkdir $HOME/.vnc
-RUN echo '#!/bin/bash\nxrdb $HOME/.Xresources\nstartxfce4 &\n' > $HOME/.vnc/xstartup
-RUN chmod +x $HOME/.vnc/xstartup
+RUN ln -s /etc/vnc/xstartup $HOME/.vnc/xstartup
 # the USER env var needs to be explicitly set (not the case with the Debian 10 docker base image), otherwise vncserver refuses to start
 ENV USER ehlo
 # the vnc port
