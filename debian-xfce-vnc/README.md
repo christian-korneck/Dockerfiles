@@ -1,10 +1,11 @@
+![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/chko/debian-xfce-vnc)   [![](https://images.microbadger.com/badges/image/chko/debian-xfce-vnc.svg)](https://microbadger.com/images/chko/debian-xfce-vnc "image-size")   [![](https://images.microbadger.com/badges/version/chko/debian-xfce-vnc.svg)](https://microbadger.com/images/chko/debian-xfce-vnc "Get your own version badge on microbadger.com")
+
 ## debian-xfce-vnc
 
 A minimal Debian 10 Desktop (with xfce, firefox, thunderbird, libre office), accessible via VNC.
 
-![Image of Yaktocat](screenshot.png)
+![screenshot](screenshot.png)
 
- 
 ### quickstart
 
 ```
