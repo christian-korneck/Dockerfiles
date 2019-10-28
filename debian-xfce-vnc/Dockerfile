@@ -1,6 +1,8 @@
 # docker build -t chko/debian-xfce-vnc -f Dockerfile .
 # docker run --rm --name debian-xfce-vnc --hostname debian-xfce-vnc --shm-size 2g -p 5901:5901 -e VNCPASSWD=password -e VNCRES=1280x1024 -ti chko/debian-xfce-vnc
 FROM debian:10
+# without this builds on docker hub get stuck with interactive keyboard selection prompt
+ARG DEBIAN_FRONTEND=noninteractive
 # xfce + vncserver
 RUN apt-get update
 RUN apt-get -y install xfce4 xfce4-goodies
