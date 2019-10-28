@@ -1,6 +1,20 @@
 # docker build -t chko/debian-xfce-vnc -f Dockerfile .
 # docker run --rm --name debian-xfce-vnc --hostname debian-xfce-vnc --shm-size 2g -p 5901:5901 -e VNCPASSWD=password -e VNCRES=1280x1024 -ti chko/debian-xfce-vnc
 FROM debian:10
+# Build-time metadata as defined at http://label-schema.org
+ARG BUILD_DATE
+ARG VCS_REF
+ARG VERSION
+LABEL org.label-schema.build-date=$BUILD_DATE \
+    org.label-schema.name="debian-xfce-vnc" \
+    org.label-schema.description="A minimal Debian 10 Desktop (with xfce, firefox, thunderbird, libre office), accessible via VNC." \
+    org.label-schema.url="https://github.com/christian-korneck/Dockerfiles" \
+    org.label-schema.vcs-ref=$VCS_REF \
+    org.label-schema.vcs-url="https://github.com/christian-korneck/Dockerfiles" \
+    org.label-schema.vendor="Christian Korneck <christian@korneck.de>" \
+    maintainer="Christian Korneck <christian@korneck.de>" \
+    org.label-schema.version=$VERSION \
+    org.label-schema.schema-version="1.0"
 # without this builds on docker hub get stuck with interactive keyboard selection prompt
 ARG DEBIAN_FRONTEND=noninteractive
 # xfce + vncserver
